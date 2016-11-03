@@ -4,6 +4,7 @@ import collections
 from six.moves import cPickle
 import numpy as np
 
+
 class TextLoader():
     def __init__(self, data_dir, batch_size, seq_length, encoding='utf-8'):
         self.data_dir = data_dir
@@ -51,7 +52,7 @@ class TextLoader():
                                                    self.seq_length))
 
         # When the data (tensor) is too small, let's give them a better error message
-        if self.num_batches==0:
+        if self.num_batches == 0:
             assert False, "Not enough data. Make seq_length and batch_size small."
 
         self.tensor = self.tensor[:self.num_batches * self.batch_size * self.seq_length]
@@ -61,7 +62,6 @@ class TextLoader():
         ydata[-1] = xdata[0]
         self.x_batches = np.split(xdata.reshape(self.batch_size, -1), self.num_batches, 1)
         self.y_batches = np.split(ydata.reshape(self.batch_size, -1), self.num_batches, 1)
-
 
     def next_batch(self):
         x, y = self.x_batches[self.pointer], self.y_batches[self.pointer]
